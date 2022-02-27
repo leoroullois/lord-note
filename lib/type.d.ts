@@ -13,7 +13,7 @@ interface INote {
 
 // * Authentification
 interface IUser {
-	id:string;
+	id: string;
 	email: string;
 	username: string;
 }
@@ -21,4 +21,22 @@ interface IAuth {
 	isAuthenticated: boolean;
 	loading: boolean;
 	user: IUser;
+}
+
+interface IRegisterForm {
+	email: string;
+	username: string;
+	password1: string;
+	password2: string;
+}
+interface ILoginForm {
+	username: string;
+	password: string;
+}
+interface IError {
+	message: string;
+}
+interface IValidator {
+	errors: IError[];
+	isValid: boolean;
 }

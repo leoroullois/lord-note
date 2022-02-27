@@ -28,6 +28,7 @@ const Home: NextPage = (props: any) => {
 		console.log(key);
 	};
 	const handleLogout = () => {
+		localStorage.removeItem("jwtToken");
 		dispatch(logOut());
 		// router.push("/login");
 	};

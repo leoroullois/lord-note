@@ -26,7 +26,7 @@ import { spawn } from "child_process";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	loading,
-	setCurrentuser,
+	setCurrentUser,
 	userRejected,
 } from "../redux/slices/authSlice";
 import { selectAuth } from "../redux/selectors";
@@ -69,12 +69,14 @@ const Login: NextPage = () => {
 				password,
 			}),
 		});
+		console.log("HEADERS : ", res);
 		//Await for data for any desirable next steps
 		const data = await res.json();
 		if (res.status === 201) {
 			setServerError("");
 			const { username, email, _id } = data;
-			dispatch(setCurrentuser({ username, email, id: _id }));
+			localStorage.setItem("jwtToken", data.token);
+			dispatch(setCurrentUser({ username, email, id: _id }));
 			router.push("/");
 		} else {
 			setServerError(data.message);
