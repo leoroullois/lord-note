@@ -8,6 +8,7 @@ import {
 	ChangeEventHandler,
 	FormEventHandler,
 	MouseEventHandler,
+	useEffect,
 	useState,
 } from "react";
 // * UI
@@ -19,10 +20,13 @@ import { IoArrowForwardSharp } from "react-icons/io5";
 import Email from "../components/auth/email";
 import Password from "../components/auth/password";
 import Username from "../components/auth/username";
+import { useSelector } from "react-redux";
+import { selectAuth } from "../redux/selectors";
 
 const Register: NextPage = () => {
 	const router = useRouter();
-
+	const { isAuthenticated } = useSelector(selectAuth);
+	
 	const [clicked, setClicked] = useState(false);
 	const [serverError, setServerError] = useState<string>("");
 
@@ -79,6 +83,13 @@ const Register: NextPage = () => {
 		//Await for data for any desirable next steps
 		console.log("DATA :", data);
 	};
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			router.push("/");
+		}
+	}, [router, isAuthenticated]);
+
 	return (
 		<>
 			<Head>

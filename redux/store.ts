@@ -5,7 +5,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 // ! Reducers
 import notes from "./reducers/notesReducer";
-
+import auth from "./slices/authSlice";
 const middleware = [thunk];
 
 const makeStore = () =>
@@ -13,6 +13,7 @@ const makeStore = () =>
 		reducer: {
 			notes,
 			fetchnotes,
+			auth,
 		},
 		middleware,
 	});

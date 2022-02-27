@@ -8,6 +8,7 @@ import {
 	ChangeEventHandler,
 	FormEventHandler,
 	MouseEventHandler,
+	useEffect,
 	useState,
 } from "react";
 // * UI
@@ -22,9 +23,18 @@ import Username from "../components/auth/username";
 import scss from "../styles/login.module.scss";
 import { useRouter } from "next/router";
 import { spawn } from "child_process";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	loading,
+	setCurrentuser,
+	userRejected,
+} from "../redux/slices/authSlice";
+import { selectAuth } from "../redux/selectors";
 
 const Login: NextPage = () => {
 	const router = useRouter();
+	const dispatch = useDispatch();
+	const { isAuthenticated } = useSelector(selectAuth);
 
 	const [clicked, setClicked] = useState(false);
 	const [serverError, setServerError] = useState("");
@@ -47,7 +57,8 @@ const Login: NextPage = () => {
 
 		// TODO : validation
 
-		//POST form values
+		// * POST form values
+		dispatch(loading());
 		const res = await fetch("/api/auth/login", {
 			method: "POST",
 			headers: {
@@ -62,22 +73,29 @@ const Login: NextPage = () => {
 		const data = await res.json();
 		if (res.status === 201) {
 			setServerError("");
+			const { username, email, _id } = data;
+			dispatch(setCurrentuser({ username, email, id: _id }));
 			router.push("/");
 		} else {
 			setServerError(data.message);
+			dispatch(userRejected());
 		}
 		console.log("DATA : ", data);
 	};
-
+	useEffect(() => {
+		if (isAuthenticated) {
+			router.push("/");
+		}
+	}, [router, isAuthenticated]);
 	return (
 		<>
 			<Head>
-				<title>Login- LordNotes</title>
+				<title>Login - LordNotes</title>
 			</Head>
 			<main className={scss.login}>
 				<Fade>
 					<form
-						action='/login'
+						action='/api/auth/login'
 						method='POST'
 						className={scss.form}
 						onSubmit={handlePrevent}
