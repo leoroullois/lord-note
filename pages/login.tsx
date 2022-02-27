@@ -20,10 +20,14 @@ import Password from "../components/auth/password";
 import Username from "../components/auth/username";
 // * Styles
 import scss from "../styles/login.module.scss";
+import { useRouter } from "next/router";
+import { spawn } from "child_process";
 
 const Login: NextPage = () => {
-	const [clicked, setClicked] = useState(false);
+	const router = useRouter();
 
+	const [clicked, setClicked] = useState(false);
+	const [serverError, setServerError] = useState("");
 	const [password, setPassword] = useState<string>("");
 	const handlePassword: ChangeEventHandler = (e) => {
 		const elt = e.target as HTMLInputElement;
@@ -56,7 +60,13 @@ const Login: NextPage = () => {
 		});
 		//Await for data for any desirable next steps
 		const data = await res.json();
-		console.log(data);
+		if (res.status === 201) {
+			setServerError("");
+			router.push("/");
+		} else {
+			setServerError(data.message);
+		}
+		console.log("DATA : ", data);
 	};
 
 	return (
@@ -103,6 +113,9 @@ const Login: NextPage = () => {
 								</NextLink>
 							</span>
 						</Fade>
+						{serverError && (
+							<span className={scss.serverError}>• {serverError}</span>
+						)}
 					</form>
 				</Fade>
 			</main>

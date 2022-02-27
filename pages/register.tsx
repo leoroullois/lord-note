@@ -1,21 +1,30 @@
-import { Button, Link } from "@chakra-ui/react";
+// * Next
 import { NextPage } from "next";
 import Head from "next/head";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
+// * React
 import {
 	ChangeEventHandler,
 	FormEventHandler,
 	MouseEventHandler,
 	useState,
 } from "react";
+// * UI
+import scss from "../styles/register.module.scss";
 import { Fade } from "react-awesome-reveal";
+import { Button, FormErrorMessage, Link } from "@chakra-ui/react";
 import { IoArrowForwardSharp } from "react-icons/io5";
+// * Components
 import Email from "../components/auth/email";
 import Password from "../components/auth/password";
 import Username from "../components/auth/username";
-import scss from "../styles/register.module.scss";
+
 const Register: NextPage = () => {
+	const router = useRouter();
+
 	const [clicked, setClicked] = useState(false);
+	const [serverError, setServerError] = useState<string>("");
 
 	const [email, setEmail] = useState<string>("");
 	const handleEmail: ChangeEventHandler = (e) => {
@@ -60,9 +69,15 @@ const Register: NextPage = () => {
 				password2,
 			}),
 		});
-		//Await for data for any desirable next steps
 		const data = await res.json();
-		console.log(data);
+		if (res.status === 201) {
+			setServerError("");
+			router.push("/login");
+		} else {
+			setServerError(data.message);
+		}
+		//Await for data for any desirable next steps
+		console.log("DATA :", data);
 	};
 	return (
 		<>
@@ -118,6 +133,9 @@ const Register: NextPage = () => {
 								</NextLink>
 							</span>
 						</Fade>
+						{serverError && (
+							<span className={scss.serverError}>• {serverError}</span>
+						)}
 					</form>
 				</Fade>
 			</main>

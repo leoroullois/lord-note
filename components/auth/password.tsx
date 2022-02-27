@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { ChangeEventHandler, FC, MouseEventHandler, useState } from "react";
 import { IoShieldHalfSharp } from "react-icons/io5";
-
+import {v4 as uuidv4} from "uuid";
 interface IProps {
 	handlePassword: ChangeEventHandler;
 	password: string;
@@ -21,6 +21,8 @@ interface IProps {
 
 const Password: FC<IProps> = ({ password, handlePassword, text, clicked }) => {
 	const [show, setShow] = useState(false);
+
+	const id = uuidv4();
 
 	const handleClick: MouseEventHandler = (e) => {
 		setShow((show) => !show);
@@ -32,14 +34,14 @@ const Password: FC<IProps> = ({ password, handlePassword, text, clicked }) => {
 
 	return (
 		<FormControl isRequired isInvalid={!passwordValidator(password) && clicked}>
-			<FormLabel htmlFor='password'>{text ?? "Password"}</FormLabel>
+			<FormLabel htmlFor={id}>{text ?? "Password"}</FormLabel>
 			<InputGroup>
 				<InputLeftElement pointerEvents='none'>
 					<IoShieldHalfSharp color='gray.500' />
 				</InputLeftElement>
 				<Input
 					type={show ? "text" : "password"}
-					id='password'
+					id={id}
 					value={password}
 					onChange={handlePassword}
 					placeholder='Enter password'
