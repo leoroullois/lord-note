@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { ChangeEventHandler, FC, MouseEventHandler, useState } from "react";
 import { IoShieldHalfSharp } from "react-icons/io5";
-import {v4 as uuidv4} from "uuid";
+import { v4 as uuidv4 } from "uuid";
 interface IProps {
 	handlePassword: ChangeEventHandler;
 	password: string;
@@ -52,9 +52,7 @@ const Password: FC<IProps> = ({ password, handlePassword, text, clicked }) => {
 					</Button>
 				</InputRightElement>
 			</InputGroup>
-			{!passwordValidator(password) ? (
-				<FormErrorMessage>Password is required.</FormErrorMessage>
-			) : (
+			{!passwordValidator(password) && (
 				<FormHelperText>
 					Your password must be at least 8 characters.
 				</FormHelperText>

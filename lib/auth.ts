@@ -91,6 +91,7 @@ export const keepLoggedIn = (store: any) => {
 		const currentTime = Date.now() / 1000; // to get in milliseconds
 		if (decoded.exp < currentTime) {
 			// Logout user
+			localStorage.removeItem("jwtToken");
 			store.dispatch(logOut());
 			// Redirect to login
 			Router.push("/login");

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { hashPassword, validateLoginInput } from "../../../lib/auth";
+import { hashPassword, validateRegisterInput } from "../../../lib/auth";
 import { connectToDatabase } from "../../../lib/db";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	console.log(`${req.method} - ${req.url}`);
@@ -8,7 +8,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		const { email, username, password1 } = req.body;
 
 		// * Validation
-		const validation = validateLoginInput(req.body);
+		const validation = validateRegisterInput(req.body);
 		if (validation.isValid) {
 			const client = await connectToDatabase();
 			const db = client.db();
