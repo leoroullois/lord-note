@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 // ? Components
 import Footer from "../components/footer/footer";
 import SideBar from "../components/sidebar/sidebar";
+import Editor from "../components/editor/editor";
 
 const Home: NextPage = (props: any) => {
 	const router = useRouter();
@@ -44,16 +45,7 @@ const Home: NextPage = (props: any) => {
 				</Head>
 				<div className={scss.index}>
 					<SideBar />
-					<main className={scss.main}>
-						<br />
-						{/* <NextLink href='/login' passHref>
-						<Link color='blue.400'>Login</Link>
-					</NextLink>
-					<NextLink href='/register' passHref>
-						<Link color='blue.400'>Register</Link>
-					</NextLink> */}
-						<br />
-					</main>
+					<Editor />
 				</div>
 				<Footer />
 			</>

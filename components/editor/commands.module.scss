@@ -1,0 +1,18 @@
+@import "../../styles/imports/mixins";
+@import "../../styles/imports/variables";
+
+.commands {
+	display: flex;
+    justify-content: space-between;
+	width: 100%;
+	padding: 10px 20px;
+	border-bottom: $border;
+	.btnContainer {
+		display: flex;
+		column-gap: 10px;
+	}
+	.previewBtn {
+		color: $gray-800;
+		background-color: $blue-300;
+	}
+}
