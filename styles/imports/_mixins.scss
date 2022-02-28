@@ -5,3 +5,16 @@
 	width: $width;
 	background-color: $gray-500;
 }
+@mixin flex-center() {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+@mixin flex-column() {
+	display: flex;
+	flex-direction: column;
+}
+@mixin flex-row() {
+	display: flex;
+	flex-direction: row;
+}

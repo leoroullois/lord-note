@@ -22,7 +22,6 @@ import Username from "../components/auth/username";
 // * Styles
 import scss from "../styles/login.module.scss";
 import { useRouter } from "next/router";
-import { spawn } from "child_process";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	loading,
@@ -43,7 +42,6 @@ const Login: NextPage = () => {
 		const elt = e.target as HTMLInputElement;
 		setPassword(elt.value);
 	};
-
 	const [username, setUsername] = useState<string>("");
 	const handleUsername: ChangeEventHandler = (e) => {
 		const elt = e.target as HTMLInputElement;

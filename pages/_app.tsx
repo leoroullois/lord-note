@@ -24,7 +24,7 @@ const MyApp = ({
 	return (
 		<Provider store={store}>
 			<ChakraProvider>
-				<Component {...pageProps} />;
+				<Component {...pageProps} />
 			</ChakraProvider>
 		</Provider>
 	);
