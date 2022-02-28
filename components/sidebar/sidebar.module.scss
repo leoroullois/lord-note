@@ -9,7 +9,22 @@
 	border-right: $border;
 	border-left: $border;
 	.sidenotes {
-		overflow-y:auto;
+		overflow-y: auto;
+		/* width */
+		&::-webkit-scrollbar {
+			width: 8px;
+		}
+
+		/* Track */
+		&::-webkit-scrollbar-track {
+			border-left: $border;
+		}
+
+		/* Handle */
+		&::-webkit-scrollbar-thumb {
+			background: $blue-500;
+			border-radius: 10px;
+		}
 	}
 }
 
