@@ -1,13 +1,14 @@
-@import "./imports/mixins";
-@import "./imports/variables";
+@import "../../styles/imports/mixins";
+@import "../../styles/imports/variables";
 
 .footer {
 	@include flex-row();
 	align-items: center;
 	justify-content: space-between;
 	padding: 10px 60px;
+	height:60px;
 	flex-shrink: 0;
-	border-top: 1px solid $gray-700;
+	border-top: $border;
 	p {
 		@include flex-row();
 		align-items: center;
@@ -33,5 +34,16 @@
 	}
 	.darkModeIcon {
 		margin-left: 10px;
+	}
+}
+
+@media screen and (max-width: 724px) {
+	.footer {
+		flex-direction: column;
+		align-items: center;
+		row-gap: 10px;
+		p {
+			flex-wrap: wrap;
+		}
 	}
 }

@@ -3,14 +3,14 @@ import type { NextPage } from "next";
 import Head from "next/head";
 // ? React & Redux
 import { useSelector } from "react-redux";
-import { MouseEventHandler, useEffect } from "react";
+import { useEffect } from "react";
 // ? Styles
 import scss from "../styles/index.module.scss";
-import { Button, useColorMode } from "@chakra-ui/react";
 import { selectAuth } from "../redux/selectors";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 // ? Components
 import Footer from "../components/footer/footer";
+import SideBar from "../components/sidebar/sidebar";
 
 const Home: NextPage = (props: any) => {
 	const router = useRouter();
@@ -43,8 +43,8 @@ const Home: NextPage = (props: any) => {
 					<title>Lord Notes</title>
 				</Head>
 				<div className={scss.index}>
+					<SideBar />
 					<main className={scss.main}>
-						<h1>Title</h1>
 						<br />
 						{/* <NextLink href='/login' passHref>
 						<Link color='blue.400'>Login</Link>
@@ -54,8 +54,8 @@ const Home: NextPage = (props: any) => {
 					</NextLink> */}
 						<br />
 					</main>
-					<Footer />
 				</div>
+				<Footer />
 			</>
 		);
 	}

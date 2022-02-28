@@ -1,0 +1,31 @@
+@import "../../styles/imports/mixins";
+@import "../../styles/imports/variables";
+
+.sidebar {
+	display: flex;
+	flex-direction: column;
+	width: 500px;
+	height: 100%;
+	border-right: $border;
+	border-left: $border;
+	.sidenotes {
+		overflow-y:auto;
+	}
+}
+
+.header {
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+	padding: 10px 20px;
+	border-bottom: $border;
+	.headerContent {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		h1 {
+			font-size: 1.5rem;
+			font-weight: bold;
+		}
+	}
+}

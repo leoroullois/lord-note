@@ -1,0 +1,55 @@
+@import "../../styles/imports/mixins";
+@import "../../styles/imports/variables";
+
+.sidenote {
+	display: flex;
+	column-gap: 20px;
+	position: relative;
+	padding: 10px 20px;
+	height: auto;
+	width: 100%;
+	border-bottom: $border;
+
+	cursor: pointer;
+	&:hover {
+		background-color: rgba($gray-500, 0.1);
+	}
+	&:active::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		width: 3px;
+		background-color: $blue-400;
+	}
+	.icon {
+		font-size: 1.5rem;
+		color: $blue-500;
+	}
+}
+
+.infosContainer {
+	display: flex;
+	flex-direction: column;
+	h2 {
+		font-weight: bold;
+		font-size: 1.1rem;
+	}
+	h3 {
+		color: $gray-400;
+		font-size: 1.1rem;
+	}
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		column-gap: 10px;
+		width: 100%;
+		margin: 10px 0;
+	}
+	.tag {
+		color: $blue-400;
+		background-color: rgba($gray-500, 0.3);
+		font-weight: bold;
+	}
+}

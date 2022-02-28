@@ -13,7 +13,7 @@ import React from "react";
 import { IoPersonCircle } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/selectors";
-import scss from "../../styles/footer.module.scss";
+import scss from "./footer.module.scss";
 
 const Profile = () => {
 	const user = useSelector(selectUser);
