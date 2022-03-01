@@ -10,6 +10,7 @@ const Editor = () => {
 				placeholder='Here is a sample note'
 				size='sm'
 				resize={"none"}
+				variant='unstyled'
 				className={scss.textarea}
 			/>
 		</main>

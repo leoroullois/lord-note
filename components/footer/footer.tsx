@@ -17,11 +17,11 @@ const Footer = () => {
 	};
 	return (
 		<footer className={scss.footer}>
-			<p>
+			<div>
 				<Profile />
 				<span className={scss.strong}>{user.username}</span>
 				&nbsp;-&nbsp; 0 notes
-			</p>
+			</div>
 			<div>
 				<Button
 					leftIcon={<IoLogOut onClick={handleLogout} />}
