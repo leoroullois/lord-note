@@ -22,7 +22,13 @@
 
 		/* Handle */
 		&::-webkit-scrollbar-thumb {
-			background: $blue-500;
+			background: rgb(13, 92, 179);
+			background: linear-gradient(
+				180deg,
+				rgba(13, 92, 179, 1) 0%,
+				rgba(37, 131, 235, 1) 33%,
+				rgba(63, 119, 207, 1) 100%
+			);
 			border-radius: 10px;
 		}
 	}

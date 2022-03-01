@@ -9,17 +9,14 @@ import {
 } from "@chakra-ui/react";
 import { MouseEventHandler } from "react";
 import { IoArrowForward } from "react-icons/io5";
-import scss from "./commands.module.scss";
-import Previewer from "./previewer";
+import Previewer from "../previewer";
 
-const PreviewButton = () => {
+const Preview = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	const handleClick: MouseEventHandler = (e) => {
 		onOpen();
 	};
-
-	const sizes = ["xs", "sm", "md", "lg", "xl", "full"];
 
 	return (
 		<>
@@ -40,4 +37,4 @@ const PreviewButton = () => {
 	);
 };
 
-export default PreviewButton;
+export default Preview;

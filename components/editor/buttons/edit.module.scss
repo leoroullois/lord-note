@@ -1,0 +1,17 @@
+@import "../../../styles/imports/variables";
+
+.popover {
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+	.controls {
+		display: flex;
+		justify-content: flex-end;
+		margin-bottom: 10px;
+	}
+}
+
+.title {
+	font-size: 1.2rem;
+	font-weight: bold;
+}
