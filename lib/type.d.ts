@@ -1,14 +1,26 @@
-interface ITest {
-	fetching: boolean;
-	error: boolean;
-	data: any;
-}
-
 interface INote {
+	_id: string;
 	title: string;
 	tags: string[];
 	date: string;
 	text: string;
+	active: boolean;
+}
+interface IHandleActive {
+	_id: string;
+}
+interface IHandleTag {
+	_id: string;
+	tag: string;
+}
+interface IHandleTitle {
+	_id: string;
+	title: string;
+}
+interface IAllNotes {
+	fetching: boolean;
+	error: boolean;
+	data: INote[];
 }
 
 // * Authentification

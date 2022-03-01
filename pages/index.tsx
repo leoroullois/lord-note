@@ -30,7 +30,7 @@ const Home: NextPage = (props: any) => {
 		return (
 			<>
 				<Head>
-					<title>Lord Notes</title>
+					<title>Home - Lord Notes</title>
 				</Head>
 				<div>
 					<h1>Loading...</h1>
@@ -41,7 +41,7 @@ const Home: NextPage = (props: any) => {
 		return (
 			<>
 				<Head>
-					<title>Lord Notes</title>
+					<title>Home - Lord Notes</title>
 				</Head>
 				<div className={scss.index}>
 					<SideBar />

@@ -1,10 +1,8 @@
-import fetchnotes from "./reducers/fetchnotesReducer";
-
 // ! Config
 import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 // ! Reducers
-import notes from "./reducers/notesReducer";
+import notes from "./slices/notesSlice";
 import auth from "./slices/authSlice";
 const middleware = [thunk];
 
@@ -12,7 +10,6 @@ const makeStore = () =>
 	configureStore({
 		reducer: {
 			notes,
-			fetchnotes,
 			auth,
 		},
 		middleware,
