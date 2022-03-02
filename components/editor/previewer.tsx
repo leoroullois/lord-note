@@ -1,10 +1,19 @@
+import { useColorMode } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
+import { useSelector } from "react-redux";
+import { selectActiveNote } from "../../redux/selectors";
+import scss from "./previewer.module.scss";
 const Previewer = () => {
+	const { colorMode, toggleColorMode } = useColorMode();
+	const activeNote = useSelector(selectActiveNote);
+
 	return (
-		<ReactMarkdown>
-			{
-				"# Bonjour à tous !\n## Ecrivez du markdown directement dans votre navigateur !\n### Visualisez tous cela en direct !\nVous pouvez écrire du code `<h1>Ceci est un titre</h1>` ou encore \n```\n<h1>Ceci est un titre</h1>\n<section id='header'>Comment allez vous ?</section>\n```\n pour plus d'informations [cliquez ici]('freecodecamp.org')\n- Voici\n- une\n- liste\n> Il y a même possibilité de mettre des citations !\n Il est également possible de mettre des **images** : ![freeCodeCamp Logo](https://cdn.freecodecamp.org/testable-projects-fcc/images/fcc_secondary.svg)"
+		<ReactMarkdown
+			className={
+				colorMode === "light" ? scss.previewerLight : scss.previewerDark
 			}
+		>
+			{activeNote?.text ?? ""}
 		</ReactMarkdown>
 	);
 };

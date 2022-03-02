@@ -29,15 +29,10 @@ import { createNote, setActive } from "../../redux/slices/notesSlice";
 const AddNote = () => {
 	const dispatch = useDispatch();
 	const notes = useSelector(selectNotes);
-	const [lastNote, setLastNote] = useState<INote | undefined>(undefined);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const toast = useToast();
 	const [title, setTitle] = useState<string>("");
 	const [tags, setTags] = useState<string>("");
-
-	useEffect(() => {
-		setLastNote(notes[notes.length - 1]);
-	}, [notes]);
 
 	const handleChange: ChangeEventHandler = (e) => {
 		const elt = e.target as HTMLInputElement;
@@ -59,9 +54,6 @@ const AddNote = () => {
 				tags: tags.split(" "),
 			})
 		);
-		if (lastNote) {
-			dispatch(setActive(lastNote._id));
-		}
 		toast({
 			title: `😁 Notes successfully created ! `,
 			status: "success",
@@ -70,6 +62,7 @@ const AddNote = () => {
 		});
 		onClose();
 	};
+
 	return (
 		<>
 			<Tooltip hasArrow label='Create new note'>

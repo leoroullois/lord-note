@@ -14,7 +14,7 @@ interface IHandleCreate {
 	title: string;
 	tags: string[];
 }
-type IHandleActive = string;
+type IHandleActive = string | undefined;
 interface IHandleTag {
 	_id: string;
 	tag: string[];

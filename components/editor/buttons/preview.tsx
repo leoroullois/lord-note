@@ -27,8 +27,15 @@ const Preview = () => {
 			<Drawer onClose={onClose} isOpen={isOpen} size='xl'>
 				<DrawerOverlay />
 				<DrawerContent>
-					<DrawerHeader>🚀 Markdown previewer</DrawerHeader>
-					<DrawerBody>
+					<DrawerHeader
+						fontSize={28}
+						// boxShadow='rgba(0, 0, 0, 0.35) 0px 5px 15px;'
+						// borderRadius='0 0 0 8px'
+						borderBottom="1px solid rgba(150,150,150,0.5)"
+					>
+						🚀 Markdown previewer
+					</DrawerHeader>
+					<DrawerBody padding={30}>
 						<Previewer />
 					</DrawerBody>
 				</DrawerContent>

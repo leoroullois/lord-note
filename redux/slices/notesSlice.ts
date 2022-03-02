@@ -1,3 +1,4 @@
+import { useDispatch } from "react-redux";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import mongoose from "mongoose";
 
@@ -29,15 +30,18 @@ const notes = createSlice({
 				title,
 				tags,
 				date: Date.now(),
-				text: "",
-				active: false,
+				text: ``,
+				active: true,
 			};
+			if (state.data.length) {
+				state.data.forEach((elt) => (elt.active = false));
+			}
 			state.data.push(note);
 		},
 		writeNote(state, action: PayloadAction<IHandleWrite>) {
 			const note: IHandleWrite = action.payload;
 			const index = state.data.findIndex((elt) => elt._id === note._id);
-			state.data[index].text = note.content;
+			state.data[index].text = `${note.content}`;
 			// return state;
 		},
 		deleteNote(state, action: PayloadAction<INote>) {
@@ -70,14 +74,18 @@ const notes = createSlice({
 		},
 		setActive(state, action: PayloadAction<IHandleActive>) {
 			const _id = action.payload;
-			const data: INote[] = state.data.map((note) => ({
-				...note,
-				active: note._id === _id,
-			}));
-			return {
-				...state,
-				data,
-			};
+			if (_id) {
+				const data: INote[] = state.data.map((note) => ({
+					...note,
+					active: note._id === _id,
+				}));
+				return {
+					...state,
+					data,
+				};
+			} else {
+				return state;
+			}
 		},
 	},
 	extraReducers: (builder) => {
