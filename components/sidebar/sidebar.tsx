@@ -1,27 +1,26 @@
 import SideNote from "./sidenote";
 import scss from "./sidebar.module.scss";
 import SearchBar from "./searchbar";
-import { IconButton, Tooltip } from "@chakra-ui/react";
-import { IoAdd } from "react-icons/io5";
 import { useState } from "react";
+import AddNote from "./addnote";
+import { useSelector } from "react-redux";
+import { selectNotes } from "../../redux/selectors";
 const SideBar = () => {
-	const [notes, setNotes] = useState<any>([]);
+	const notes = useSelector(selectNotes);
 	return (
 		<nav className={scss.sidebar}>
-			<section className={scss.header}>
-				<div className={scss.headerContent}>
+			<header className={scss.header}>
+				<section className={scss.headerContent}>
 					<h1>✨ All notes</h1>
-					<Tooltip hasArrow label='Create new note'>
-						<IconButton
-							aria-label='Add note'
-							icon={<IoAdd />}
-							// onClick={}
-						/>
-					</Tooltip>
-				</div>
+					<AddNote />
+				</section>
 				<SearchBar />
-			</section>
-			<section className={scss.sidenotes}>{notes}</section>
+			</header>
+			<main className={scss.sidenotes}>
+				{notes.map((elt, i) => (
+					<SideNote note={elt} key={i} />
+				))}
+			</main>
 		</nav>
 	);
 };

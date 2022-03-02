@@ -1,7 +1,7 @@
 import { RootState } from "./store";
 
-export const selectNotes = (state: RootState) => state.notes;
-export const selectActiveNote = (state: RootState) =>
+export const selectNotes = (state: RootState): INote[] => state.notes.data;
+export const selectActiveNote = (state: RootState): INote | undefined =>
 	state.notes.data.find((elt) => elt.active);
 
 // * Auth

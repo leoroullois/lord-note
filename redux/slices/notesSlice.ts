@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import mongoose from "mongoose";
 
 const initialState: IAllNotes = {
 	fetching: false,
@@ -21,10 +22,23 @@ const notes = createSlice({
 	name: "notes",
 	initialState,
 	reducers: {
-		writeNote(state, action: PayloadAction<INote>) {
-			const note: INote = action.payload;
+		createNote(state, action: PayloadAction<IHandleCreate>) {
+			const { title, tags } = action.payload;
+			const note: INote = {
+				_id: new mongoose.Types.ObjectId().toString(),
+				title,
+				tags,
+				date: Date.now(),
+				text: "",
+				active: false,
+			};
+			state.data.push(note);
+		},
+		writeNote(state, action: PayloadAction<IHandleWrite>) {
+			const note: IHandleWrite = action.payload;
 			const index = state.data.findIndex((elt) => elt._id === note._id);
-			state.data[index] = note;
+			state.data[index].text = note.content;
+			// return state;
 		},
 		deleteNote(state, action: PayloadAction<INote>) {
 			const note: INote = action.payload;
@@ -39,13 +53,13 @@ const notes = createSlice({
 		addTag(state, action: PayloadAction<IHandleTag>) {
 			const { tag, _id } = action.payload;
 			const index = state.data.findIndex((elt) => elt._id === _id);
-			state.data[index].tags.push(tag);
+			state.data[index].tags.push(...tag);
 		},
 		removeTag(state, action: PayloadAction<IHandleTag>) {
 			const { tag, _id } = action.payload;
 			const index = state.data.findIndex((elt) => elt._id === _id);
 			const newTags = state.data[index].tags.filter((elt) => {
-				elt !== tag;
+				!tag.includes(elt);
 			});
 			state.data[index].tags = newTags;
 		},
@@ -55,7 +69,7 @@ const notes = createSlice({
 			state.data[index].title = title;
 		},
 		setActive(state, action: PayloadAction<IHandleActive>) {
-			const { _id } = action.payload;
+			const _id = action.payload;
 			const data: INote[] = state.data.map((note) => ({
 				...note,
 				active: note._id === _id,
@@ -88,7 +102,14 @@ const notes = createSlice({
 	},
 });
 
-export const { writeNote, deleteNote, addTag, removeTag, editTitle } =
-	notes.actions;
+export const {
+	createNote,
+	writeNote,
+	deleteNote,
+	addTag,
+	removeTag,
+	editTitle,
+	setActive,
+} = notes.actions;
 
 export default notes.reducer;

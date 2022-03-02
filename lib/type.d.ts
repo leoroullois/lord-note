@@ -2,16 +2,22 @@ interface INote {
 	_id: string;
 	title: string;
 	tags: string[];
-	date: string;
+	date: number;
 	text: string;
 	active: boolean;
 }
-interface IHandleActive {
+interface IHandleWrite {
 	_id: string;
+	content: string;
 }
+interface IHandleCreate {
+	title: string;
+	tags: string[];
+}
+type IHandleActive = string;
 interface IHandleTag {
 	_id: string;
-	tag: string;
+	tag: string[];
 }
 interface IHandleTitle {
 	_id: string;
