@@ -1,23 +1,22 @@
 import { validateLoginInput } from "./../../../lib/auth";
 import { NextApiRequest, NextApiResponse } from "next";
-import { connectToDatabase } from "../../../lib/db";
+import { connectDB } from "../../../lib/db";
 import { verifyPassword } from "../../../lib/auth";
 import jwt from "jsonwebtoken";
+import { User } from "../../../models/User";
+import mongoose from "mongoose";
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	console.log(`${req.method} - ${req.url}`);
 	// * Only POST method is accepted
 	if (req.method === "POST") {
 		const { username, password } = req.body;
-
 		// * validation
 		const validation = validateLoginInput(req.body);
 		if (validation.isValid) {
-			const client = await connectToDatabase();
-			const db = client.db();
-			const user = await db.collection("users").findOne({ username });
-
+			const user = await User.findOne({ username });
 			if (!user) {
-				client.close();
+				mongoose.connection.close();
 				return res.status(404).json({ message: "User not found." });
 			} else if (await verifyPassword(password, user.password)) {
 				const payload = {
@@ -30,13 +29,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				});
 				console.log("TOKEN : ", token);
 				res.setHeader("Authorization", token as string);
-				client.close();
+				mongoose.connection.close();
+
 				return res.status(201).json({
 					message: "User logged in.",
 					token: "Bearer " + token,
 					...user,
 				});
-				// res.status(201).json({ message: "User logged in.", ...user });
 			} else {
 				return res.status(401).json({ message: "Password is incorrect." });
 			}
@@ -49,4 +48,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 };
 
-export default handler;
+export default connectDB(handler);

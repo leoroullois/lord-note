@@ -18,7 +18,19 @@ export const fetchNotes = createAsyncThunk(
 		return res;
 	}
 );
-
+export const saveNotes = createAsyncThunk(
+	"notes/saveNote",
+	async (note: INote & { userId: string }) => {
+		const res = await fetch("/api/notes", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(note),
+		}).then((msg) => msg.json());
+		return res;
+	}
+);
 const notes = createSlice({
 	name: "notes",
 	initialState,
@@ -106,6 +118,16 @@ const notes = createSlice({
 			state.fetching = false;
 			state.error = true;
 			state.data = [];
+		});
+
+		builder.addCase(saveNotes.pending, () => {
+			console.log("Saving note...");
+		});
+		builder.addCase(saveNotes.fulfilled, () => {
+			console.log("Note succesfully saved.");
+		});
+		builder.addCase(saveNotes.rejected, () => {
+			console.log("An erro has occured when saving note");
 		});
 	},
 });

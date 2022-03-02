@@ -1,37 +1,45 @@
 import mongoose, { Document } from "mongoose";
-export interface INote extends Document {
-	_id: mongoose.Types.ObjectId;
+export interface INoteModel extends Document {
+	_id?: mongoose.Types.ObjectId;
+	userId: string;
 	title: string;
-	date: Date;
-	tags: string[];
+	tags: any[];
+	date: number;
+	text: string;
 }
 
-const NoteSchema = new mongoose.Schema({
+const NoteSchema = new mongoose.Schema<INoteModel>({
 	_id: {
 		type: mongoose.Types.ObjectId,
-		require: true,
+		required: true,
+		default: new mongoose.Types.ObjectId(),
 	},
-
+	userId: {
+		type: String,
+		required: true,
+		default: "",
+	},
 	title: {
 		type: String,
-		require: true,
+		required: true,
 		default: "",
 	},
 	date: {
-		type: String,
-		require: true,
+		type: Number,
+		required: true,
 		default: Date.now(),
 	},
-	note: {
+	text: {
 		type: String,
-		require: true,
-		default: [],
+		required: true,
+		default: "",
 	},
 	tags: {
-		type: Array,
-		require: true,
+		type: [String],
+		required: true,
 		default: [],
 	},
 });
 
-export const Users = mongoose.model<INote>("notes", NoteSchema);
+export const Note =
+	mongoose.models.notes || mongoose.model<INoteModel>("notes", NoteSchema);

@@ -1,6 +1,9 @@
+import mongoose from "mongoose";
 import { NextApiRequest, NextApiResponse } from "next";
 import { hashPassword, validateRegisterInput } from "../../../lib/auth";
-import { connectToDatabase } from "../../../lib/db";
+import { connectDB } from "../../../lib/db";
+import { User } from "../../../models/User";
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	console.log(`${req.method} - ${req.url}`);
 	// * Only POST method is accepted
@@ -10,33 +13,28 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		// * Validation
 		const validation = validateRegisterInput(req.body);
 		if (validation.isValid) {
-			const client = await connectToDatabase();
-			const db = client.db();
-			const checkExistingEmail = await db
-				.collection("users")
-				.countDocuments({ email });
-			const checkExistingUsername = await db
-				.collection("users")
-				.countDocuments({ username });
+			const checkExistingEmail = await User.count({ email });
+			const checkExistingUsername = await User.count({ username });
 
 			// ? Send error response if duplicate user is found
 			if (checkExistingEmail !== 0) {
+				mongoose.connection.close();
 				res.status(422).json({ message: "Email already exists." });
-				client.close();
 			} else if (checkExistingUsername !== 0) {
+				mongoose.connection.close();
 				res.status(422).json({ message: "Username already exists." });
-				client.close();
 			} else {
 				// * Hash password
-				const status = await db.collection("users").insertOne({
+				const status = await User.create({
+					_id: new mongoose.Types.ObjectId(),
 					email,
 					username,
 					password: await hashPassword(password1),
 				});
+				// ? Close DB connection
+				mongoose.connection.close();
 				// ? Send success response
 				res.status(201).json({ message: "User created", ...status });
-				// ? Close DB connection
-				client.close();
 			}
 		} else {
 			res.status(401).json(validation.errors);
@@ -47,4 +45,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 };
 
-export default handler;
+export default connectDB(handler);

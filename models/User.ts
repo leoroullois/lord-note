@@ -11,7 +11,6 @@ const UserSchema = new mongoose.Schema({
 		type: mongoose.Types.ObjectId,
 		require: true,
 	},
-
 	username: {
 		type: String,
 		required: true,
@@ -22,8 +21,10 @@ const UserSchema = new mongoose.Schema({
 	},
 	password: {
 		type: String,
-		required: false,
+		required: true,
 	},
 });
 
-export const User = mongoose.model<IUser>("users", UserSchema);
+// delete.mongoose.connection.models["users"];
+export const User =
+	mongoose.models.users || mongoose.model<IUser>("users", UserSchema);
