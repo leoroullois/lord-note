@@ -7,10 +7,10 @@ export interface IUser extends Document {
 }
 
 const UserSchema = new mongoose.Schema({
-	_id: {
-		type: mongoose.Types.ObjectId,
-		require: true,
-	},
+	// _id: {
+	// 	type: mongoose.Types.ObjectId,
+	// 	required: true,
+	// },
 	username: {
 		type: String,
 		required: true,
@@ -27,4 +27,4 @@ const UserSchema = new mongoose.Schema({
 
 // delete.mongoose.connection.models["users"];
 export const User =
-	mongoose.models.users || mongoose.model<IUser>("users", UserSchema);
+	mongoose.models?.users || mongoose.model<IUser>("users", UserSchema);

@@ -15,20 +15,14 @@ import {
 	useDisclosure,
 	useToast,
 } from "@chakra-ui/react";
-import {
-	ChangeEventHandler,
-	MouseEventHandler,
-	useEffect,
-	useState,
-} from "react";
+import { ChangeEventHandler, MouseEventHandler, useState } from "react";
 import { IoAdd } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { selectNotes } from "../../redux/selectors";
-import { createNote, setActive } from "../../redux/slices/notesSlice";
+import { createNote } from "../../redux/slices/notesSlice";
 
 const AddNote = () => {
 	const dispatch = useDispatch();
-	const notes = useSelector(selectNotes);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const toast = useToast();
 	const [title, setTitle] = useState<string>("");
@@ -54,6 +48,8 @@ const AddNote = () => {
 				tags: tags.split(" "),
 			})
 		);
+		setTitle("");
+		setTags("");
 		toast({
 			title: `😁 Notes successfully created ! `,
 			status: "success",

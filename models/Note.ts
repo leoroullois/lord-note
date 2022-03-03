@@ -8,12 +8,11 @@ export interface INoteModel extends Document {
 	text: string;
 }
 
-const NoteSchema = new mongoose.Schema<INoteModel>({
-	_id: {
-		type: mongoose.Types.ObjectId,
-		required: true,
-		default: new mongoose.Types.ObjectId(),
-	},
+const NoteSchema = new mongoose.Schema({
+	// _id: {
+	// 	type: mongoose.Types.ObjectId,
+	// 	required: true,
+	// },
 	userId: {
 		type: String,
 		required: true,
@@ -42,4 +41,4 @@ const NoteSchema = new mongoose.Schema<INoteModel>({
 });
 
 export const Note =
-	mongoose.models.notes || mongoose.model<INoteModel>("notes", NoteSchema);
+	mongoose.models?.notes || mongoose.model<INoteModel>("notes", NoteSchema);

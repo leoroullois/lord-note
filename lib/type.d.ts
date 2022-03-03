@@ -6,6 +6,9 @@ interface INote {
 	text: string;
 	active: boolean;
 }
+interface IHandleDelete {
+	id:string;
+}
 interface IHandleWrite {
 	_id: string;
 	content: string;

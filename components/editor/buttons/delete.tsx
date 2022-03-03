@@ -24,7 +24,7 @@ const Delete = () => {
 
 	const handleDelete: MouseEventHandler = (e) => {
 		if (activeNote) {
-			dispatch(deleteNote(activeNote));
+			dispatch(deleteNote(activeNote._id));
 			toast({
 				title: `The active note has been deleted.`,
 				status: "success",

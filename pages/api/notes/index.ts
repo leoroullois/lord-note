@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { connectDB } from "../../lib/db";
-import {} from "../../models/User";
+import { connectDB } from "../../../lib/db";
+import {} from "../../../models/User";
 import mongoose from "mongoose";
-import { Note } from "../../models/Note";
+import { Note } from "../../../models/Note";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	console.log(`${req.method} - ${req.url}`);
@@ -30,8 +30,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		case "GET":
 			const userId = req.query.id as string;
 			const notes = await Note.find({ userId });
+			mongoose.connection.close();
 			return res.status(200).json(notes);
+		case "DELETE":
+			const id = req.query.id;
+			const deletedNote = await Note.findOneAndDelete({ _id: id });
+			mongoose.connection.close();
+			return res.status(201).json(deletedNote);
 		default:
+			mongoose.connection.close();
 			return res.status(500).json({ message: "Route note valid" });
 	}
 };

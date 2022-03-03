@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import mongoose from "mongoose";
+import { Note } from "../../models/Note";
 
 const initialState: IAllNotes = {
 	fetching: false,
@@ -31,6 +32,17 @@ export const saveNotes = createAsyncThunk(
 		return res;
 	}
 );
+
+export const deleteNote = createAsyncThunk(
+	"notes/deleteNote",
+	async (id: string) => {
+		const res = await fetch(`/api/notes?id=${id}`, {
+			method: "DELETE",
+		}).then((doc) => doc.json());
+		return id;
+	}
+);
+
 const notes = createSlice({
 	name: "notes",
 	initialState,
@@ -55,16 +67,6 @@ const notes = createSlice({
 			const index = state.data.findIndex((elt) => elt._id === note._id);
 			state.data[index].text = `${note.content}`;
 			// return state;
-		},
-		deleteNote(state, action: PayloadAction<INote>) {
-			const note: INote = action.payload;
-			const newNotes: INote[] = state.data.filter(
-				(elt) => note._id !== elt._id
-			);
-			return {
-				...state,
-				data: newNotes,
-			};
 		},
 		addTag(state, action: PayloadAction<IHandleTag>) {
 			const { tag, _id } = action.payload;
@@ -127,7 +129,22 @@ const notes = createSlice({
 			console.log("Note succesfully saved.");
 		});
 		builder.addCase(saveNotes.rejected, () => {
-			console.log("An erro has occured when saving note");
+			console.log("An error has occured when saving note");
+		});
+
+		builder.addCase(deleteNote.pending, () => {
+			console.log("Deleting note...");
+		});
+		builder.addCase(
+			deleteNote.fulfilled,
+			(state, action: PayloadAction<string>) => {
+				const id = action.payload;
+				console.log("Note succesfully deleted.");
+				state.data = state.data.filter((elt) => elt._id !== id);
+			}
+		);
+		builder.addCase(deleteNote.rejected, () => {
+			console.log("An error has occured when deleting note");
 		});
 	},
 });
@@ -135,7 +152,6 @@ const notes = createSlice({
 export const {
 	createNote,
 	writeNote,
-	deleteNote,
 	addTag,
 	removeTag,
 	editTitle,
