@@ -25,9 +25,10 @@ const Footer = () => {
 			</div>
 			<div>
 				<Button
-					leftIcon={<IoLogOut onClick={handleLogout} />}
+					leftIcon={<IoLogOut />}
 					variant='outline'
 					borderColor='gray.500'
+					onClick={handleLogout}
 				>
 					Log out
 				</Button>
