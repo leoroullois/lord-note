@@ -3,6 +3,7 @@ import { ChangeEventHandler } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectActiveNote } from "../../redux/selectors";
 import { writeNote } from "../../redux/slices/notesSlice";
+import dynamic from "next/dynamic";
 import Commands from "./commands";
 import scss from "./editor.module.scss";
 

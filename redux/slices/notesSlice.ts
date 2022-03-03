@@ -12,8 +12,8 @@ export const fetchNotes = createAsyncThunk(
 	//action type string
 	"notes/fetchNotes",
 	// callback function
-	async () => {
-		const url = "https://jsonplaceholder.typicode.com/posts";
+	async (id: string) => {
+		const url = `/api/notes?id=${id}`;
 		const res = await fetch(url).then((data) => data.json());
 		return res;
 	}

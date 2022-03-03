@@ -72,8 +72,9 @@ const Login: NextPage = () => {
 		const data = await res.json();
 		if (res.status === 201) {
 			setServerError("");
-			const { username, email, _id } = data;
+			const { username, email, _id } = data._doc;
 			localStorage.setItem("jwtToken", data.token);
+			console.log("DATA", data);
 			dispatch(setCurrentUser({ username, email, id: _id }));
 			router.push("/");
 		} else {

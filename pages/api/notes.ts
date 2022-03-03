@@ -6,7 +6,7 @@ import { Note } from "../../models/Note";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	console.log(`${req.method} - ${req.url}`);
-	console.log("BODY", req.body);
+	console.log("QUERY", req.query);
 	switch (req.method) {
 		case "POST":
 			const note = req.body;
@@ -28,7 +28,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			mongoose.connection.close();
 			return res.status(201).json({ message: "Note updated sucessfully." });
 		case "GET":
-			const userId = req.body as string;
+			const userId = req.query.id as string;
 			const notes = await Note.find({ userId });
 			return res.status(200).json(notes);
 		default:
